@@ -1,36 +1,26 @@
-import os
+# To calculate the number of occurances of a word in a file tweets.txt
 import sys
-import numpy as np
 import collections
-temp = os.path.dirname(os.getcwd())
-input_files = os.path.join(temp,"Insight/tweet_input/tweets.txt")
-output_file = os.path.join(temp,"Insight/tweet_output/ft1.txt")
-# if(os.path.isfile(output_file) and os.path.getsize(output_file) > 0):
-# 		f1=open(output_file,"r")
-# 		position=f1.readline()
-# 		f1.close();
-# 	position=int(position)
-# # def sentences(file_name):
-# # 	with open(file_name) as f:
-# # 		for line in f:
-# # 			yield line.strip().split()
+
+input_files=str(sys.argv[1])
+output_file=str(sys.argv[2])
+
+# list1 is the dictionary that is created and it stores the count of every word in the form of a key and value
 list1={}
 with open(input_files) as f:
 	for line in f:
-		line=line.strip().split()
+		line=line.strip().split() # we split the sentence such that whenever we come across a whitespace we store a new word
 		for i in line:
-			if i in list1:
+			if i in list1: # to increment the value of a key in the dictionary 
 				temp = int(list1[i])
 				temp=temp+1;
 				list1[i]=temp;
-			else:
+			else: # initial value of a key 
 				list1[i]=1;
-list1 = collections.OrderedDict(sorted(list1.items(), key=lambda t: t[0]))
-f1=open(output_file,"w")
+list1 = collections.OrderedDict(sorted(list1.items(), key=lambda t: t[0])) # sorting the dictionary as per ascii values
+f1=open(output_file,"w") # Writing results to the output file 
 for word, count in list1.items():
-	f1.write(word)
-	f1.write(':\t\t\t')
-	f1.write(str(count))
-	f1.write('\n')
+	f1.write('{0:30} {1:20} \n'.format(word,count))
+
 f1.close()
 
